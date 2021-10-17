@@ -99,19 +99,21 @@ class HomeScreenController extends AbstractController
 
 
     /**
-     * @Route("/notes/all/{userid}", name="get_all_notes_for_user", methods={"GET"})
+     * @Route("/notes/find/{userid}", name="get_all_notes_for_user", methods={"GET"})
      */
     public function getAllUserNotes($userid)
     {
-        $notes = $this->getDoctrine()->getRepository(Notes::class)->find($userid);
+        $notes = $this->getDoctrine()->getRepository(Notes::class)->findBy( ['userid' => $userid],
+            ['id' => 'DESC']);
 
-        $response = [];
+
 
         if(!$notes) {
             throw $this->createNotFoundException(
                 "No notes for this user"
             );
         } else {
+            $response = [];
             foreach ($notes as $note) {
                 $response[] = array(
                     'id'=> $note->getId(),
@@ -125,6 +127,7 @@ class HomeScreenController extends AbstractController
             }
             return $this->json($response);
         }
+
     }
 
 
