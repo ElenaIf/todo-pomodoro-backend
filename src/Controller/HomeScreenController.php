@@ -97,6 +97,37 @@ class HomeScreenController extends AbstractController
 //        return $this->json($decodedNotes);
     }
 
+
+    /**
+     * @Route("/notes/all/{userid}", name="get_all_notes", methods={"GET"})
+     */
+    public function getAllUserNotes($userid)
+    {
+        $notes = $this->getDoctrine()->getRepository(Notes::class)->find($userid);
+
+        $response = [];
+
+        if(!$notes) {
+            throw $this->createNotFoundException(
+                "No notes for this user"
+            );
+        } else {
+            foreach ($notes as $note) {
+                $response[] = array(
+                    'id'=> $note->getId(),
+                    'title' => $note->getTitle(),
+                    'done' => $note->getDone(),
+                    'timeSpent' => $note->getTimeSpent(),
+                    'color' => $note->getColor(),
+                    'userid' => $note->getUserid(),
+                    'hashtag' => $note->getHashtag()
+                );
+            }
+            return $this->json($response);
+        }
+    }
+
+
     /**
      * @Route("/notes/add", name="add_new_note", methods={"POST"})
      */
