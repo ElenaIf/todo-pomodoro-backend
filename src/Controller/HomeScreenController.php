@@ -82,7 +82,9 @@ class HomeScreenController extends AbstractController
                 'title' => $note->getTitle(),
                 'done' => $note->getDone(),
                 'timeSpent' => $note->getTimeSpent(),
-                'color' => $note->getColor()
+                'color' => $note->getColor(),
+                'userid' => $note->getUserid(),
+                'hashtag' => $note->getHashtag()
             );
         }
         return $this->json($response);
@@ -111,6 +113,8 @@ class HomeScreenController extends AbstractController
         $newNote->setDone($data["done"]);
         $newNote->setTimeSpent($data["timeSpent"]);
         $newNote->setColor($data["color"]);
+        $newNote->setUserid($data["userid"]);
+        $newNote->setHashtag($data["hashtag"]);
 
         // put everything together before saving into database
         $entityManager->persist($newNote);
@@ -156,6 +160,7 @@ class HomeScreenController extends AbstractController
             $note->setTitle($data["title"]);
             $note->setDone($data["done"]);
             $note->setTimeSpent($data["timeSpent"]);
+            $note->setHashtag($data["hashtag"]);
 //            $note->setColor($data["color"]);
 
             $entityManager->flush();
