@@ -99,7 +99,7 @@ class HomeScreenController extends AbstractController
 
 
     /**
-     * @Route("/notes/all/{userid}", name="get_all_notes", methods={"GET"})
+     * @Route("/notes/all/{userid}", name="get_all_notes_for_user", methods={"GET"})
      */
     public function getAllUserNotes($userid)
     {
