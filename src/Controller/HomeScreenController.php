@@ -130,6 +130,36 @@ class HomeScreenController extends AbstractController
 
     }
 
+    /**
+     * @Route("/notes/find/{userid}/{hashtag}", name="get_hashtag_for_user", methods={"GET"})
+     */
+    public function getHashtagForUser($userid, $hashtag)
+    {
+        $notes = $this->getDoctrine()->getRepository(Notes::class)->findBy( ['userid' => $userid, 'hashtag'=>$hashtag],
+            ['id' => 'DESC']);
+
+        if(!$notes) {
+            throw $this->createNotFoundException(
+                "No notes for this user"
+            );
+        } else {
+            $response = [];
+            foreach ($notes as $note) {
+                $response[] = array(
+                    'id'=> $note->getId(),
+                    'title' => $note->getTitle(),
+                    'done' => $note->getDone(),
+                    'timeSpent' => $note->getTimeSpent(),
+                    'color' => $note->getColor(),
+                    'userid' => $note->getUserid(),
+                    'hashtag' => $note->getHashtag()
+                );
+            }
+            return $this->json($response);
+        }
+
+    }
+
 
     /**
      * @Route("/notes/add", name="add_new_note", methods={"POST"})
