@@ -37,6 +37,16 @@ class Notes
      */
     private $color;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $userid;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $hashtag;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +96,30 @@ class Notes
     public function setColor(?string $color): self
     {
         $this->color = $color;
+
+        return $this;
+    }
+
+    public function getUserid(): ?string
+    {
+        return $this->userid;
+    }
+
+    public function setUserid(string $userid): self
+    {
+        $this->userid = $userid;
+
+        return $this;
+    }
+
+    public function getHashtag(): ?string
+    {
+        return $this->hashtag;
+    }
+
+    public function setHashtag(?string $hashtag): self
+    {
+        $this->hashtag = $hashtag;
 
         return $this;
     }
