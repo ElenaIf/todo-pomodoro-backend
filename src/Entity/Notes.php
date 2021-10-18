@@ -47,6 +47,13 @@ class Notes
      */
     private $hashtag;
 
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $hashtags = [];
+
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -123,4 +130,18 @@ class Notes
 
         return $this;
     }
+
+    public function getHashtags(): ?array
+    {
+        return $this->hashtags;
+    }
+
+    public function setHashtags(?array $hashtags): self
+    {
+        $this->hashtags = $hashtags;
+
+        return $this;
+    }
+
+
 }

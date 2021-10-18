@@ -84,7 +84,8 @@ class HomeScreenController extends AbstractController
                 'timeSpent' => $note->getTimeSpent(),
                 'color' => $note->getColor(),
                 'userid' => $note->getUserid(),
-                'hashtag' => $note->getHashtag()
+                'hashtag' => $note->getHashtag(),
+                'hashtags' => $note->getHashtags()
             );
         }
         return $this->json($response);
@@ -122,7 +123,8 @@ class HomeScreenController extends AbstractController
                     'timeSpent' => $note->getTimeSpent(),
                     'color' => $note->getColor(),
                     'userid' => $note->getUserid(),
-                    'hashtag' => $note->getHashtag()
+                    'hashtag' => $note->getHashtag(),
+                    'hashtags' => $note->getHashtags()
                 );
             }
             return $this->json($response);
@@ -133,10 +135,12 @@ class HomeScreenController extends AbstractController
     /**
      * @Route("/notes/find/{userid}/{hashtag}", name="get_hashtag_for_user", methods={"GET"})
      */
-    public function getHashtagForUser($userid, $hashtag)
+    public function getUserNotesWithHashtag($userid, $hashtag)
     {
-        $notes = $this->getDoctrine()->getRepository(Notes::class)->findBy( ['userid' => $userid, 'hashtag'=>$hashtag],
+        $notes = $this->getDoctrine()->getRepository(Notes::class)->findBy( ['userid' => $userid, 'hashtag' => $hashtag],
             ['id' => 'DESC']);
+
+
 
         if(!$notes) {
             throw $this->createNotFoundException(
@@ -152,7 +156,8 @@ class HomeScreenController extends AbstractController
                     'timeSpent' => $note->getTimeSpent(),
                     'color' => $note->getColor(),
                     'userid' => $note->getUserid(),
-                    'hashtag' => $note->getHashtag()
+                    'hashtag' => $note->getHashtag(),
+                    'hashtags' => $note->getHashtags()
                 );
             }
             return $this->json($response);
@@ -179,6 +184,7 @@ class HomeScreenController extends AbstractController
         $newNote->setColor($data["color"]);
         $newNote->setUserid($data["userid"]);
         $newNote->setHashtag($data["hashtag"]);
+        $newNote->setHashtags($data["hashtags"]);
 
         // put everything together before saving into database
         $entityManager->persist($newNote);
